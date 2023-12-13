@@ -1,12 +1,7 @@
-from typing import Union
+from os import getenv
 
-from fastapi import FastAPI
+import uvicorn
 
-from utils.pdf import get_pdf_metadata
-
-app = FastAPI()
-
-
-@app.get("/pdf-metadata")
-async def read_root():
-    return get_pdf_metadata("JuanPaez_CV.pdf")
+if __name__ == "__main__":
+    port = int(getenv("PORT", 8000))
+    uvicorn.run("app.api:app", host="0.0.0.0", port=port, reload=True)
