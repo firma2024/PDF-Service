@@ -24,11 +24,11 @@ def get_pdf_from_internet(url):
     if response.status_code == 200:
         pdf_reader = PyPDF2.PdfReader(io.BytesIO(response.content))
         pdf_text = ""
-
-        for page_number in range(pdf_reader.numPages):
-            page = pdf_reader.getPage(page_number)
-            pdf_text += page.extract_text()
-
+        print(len(pdf_reader.pages))
+        for page_number in range(0, len(pdf_reader.pages)):
+            page = pdf_reader.pages[page_number]
+            if "Analógicas" in page.extract_text():
+                pdf_text += page.extract_text()
         return pdf_text
     else:
         print(f"Failed to download the PDF file. Response code: {response.status_code}")
